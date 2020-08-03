@@ -1,4 +1,4 @@
-# nlw2-web
+# Next Level Week#2 - WEB
 Repositório referente o sistema web da Next Level Week#2
 
 ## Demo
