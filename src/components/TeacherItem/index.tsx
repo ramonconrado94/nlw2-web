@@ -2,43 +2,55 @@ import React from "react";
 import whatsappIcon from "../../assets/images/icons/whatsapp.svg";
 
 import "./styles.css";
-function TeacherItem() {
+import api from "../../services/api";
+
+export interface ClassTeacher {
+  avatar: string;
+  bio: string;
+  cost: number;
+  id: number;
+  name: string;
+  subject: string;
+  whatsapp: string;
+}
+
+interface TeacherItemProps {
+  classTeacher: ClassTeacher;
+}
+const TeacherItem: React.FC<TeacherItemProps> = ({ classTeacher }) => {
+  function createNewConnection() {
+    api.post("connections", {
+      user_id: classTeacher.id,
+    });
+  }
   return (
     <article className="teacher-item">
       <header>
-        <img
-          src="https://avatars2.githubusercontent.com/u/43659431?s=460&u=80ff8f68ae71590b5db1b49c1b98ed09fb6a6f59&v=4"
-          alt="Ramon Conrado"
-        />
+        <img src={classTeacher.avatar} alt={classTeacher.name} />
         <div>
-          <strong>Ramon Conrado</strong>
-          <span>Matéria</span>
+          <strong>{classTeacher.name}</strong>
+          <span>{classTeacher.subject}</span>
         </div>
       </header>
 
-      <p>
-        Lorem Ipsum is simply dummy text of the printing and typesetting
-        industry.
-        <br />
-        <br />
-        Lorem Ipsum has been the industry's standard dummy text ever since the
-        1500s, when an unknown printer took a galley of type and scrambled it to
-        make a type specimen book. It has survived not only five centuries, but
-        also the leap into electronic typesetting, remaining essentially
-        unchanged.
-      </p>
+      <p>{classTeacher.bio}</p>
       <footer>
         <p>
           Preço/hora
-          <strong>R$ 80,00</strong>
+          <strong>R$ {classTeacher.cost}</strong>
         </p>
-        <button type="button">
+        <a
+          target="_blank"
+          href={`https://wa.me/${classTeacher.whatsapp}?text="Olá, gostaria de contratar seus serviços"`}
+          type="button"
+          onClick={createNewConnection}
+        >
           <img src={whatsappIcon} alt="whatsapp" />
           Entrar em contato
-        </button>
+        </a>
       </footer>
     </article>
   );
-}
+};
 
 export default TeacherItem;
